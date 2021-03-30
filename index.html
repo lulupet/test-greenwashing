@@ -1,8 +1,134 @@
 <!doctype html>
 <html>
-  <head>
-    <title>Test Greenwashing</title>
-  </head>
-  <body>
-  </body>
+    <head>
+      <title>Test Greenwashing</title>
+    </head>
+    <body>
+        <h1></h1>
+        <form action="/action_page.php">
+            <p>1/10 - Pour résoudre le problème du réchauffement climatique, il vaut mieux :</p>
+            <input type="radio" id="one-plus name="one" value="one-plus">
+            <label for="one-plus">des actions</label><br>
+            <input type="radio" id="one-minus" name="one" value="one-minus">
+            <label for="one-minus">de l'inaction</label><br>
+            <br>  
+          
+            <p>2/10 - Le nucléaire, c'est :</p>
+            <input type="radio" id="two-minus" name="two" value="two-minus">
+            <label for="two-minus">ce qu'il y a de mieux en termes d'énergie bas carbone</label><br>
+            <input type="radio" id="two-plus" name="two" value="two-plus">
+            <label for="two-plus">le diable</label><br>
+            <input type="radio" id="two-equal" name="two" value="two-equal">
+            <label for="two-equal">ni l'un ni l'autre</label><br>
+            <br>
+
+            <p>3/10 - Les énergies renouvelables, c'est :</p>
+            <input type="radio" id="three-plus" name="three" value="three-plus">
+            <label for="three-plus">ce qu'il y a de mieux en termes d'énergie bas carbone</label><br>
+            <input type="radio" id="three-minus" name="three" value="three-minus">
+            <label for="three-minus">le diable</label><br>
+            <input type="radio" id="three-equal" name="three" value="three-equal">
+            <label for="three-equal">ni l'un ni l'autre</label><br>
+            <br>
+
+            <p>4/10 - Elon Musk est :</p>
+            <input type="radio" id="four-plus" name="four" value="four-plus">
+            <label for="four-plus">un génie qui va sauver le monde</label><br>
+            <input type="radio" id="four-minus" name="four" value="four-minus">
+            <label for="four-minus">un génie qui va détruire le monde</label><br>
+            <input type="radio" id="four-equal" name="four" value="four-equal">
+            <label for="four-equal">ni l'un ni l'autre</label><br>
+            <br>
+
+            <p>5/10 - La technologie est la solution au problème du réchauffement climatique :</p>
+            <input type="radio" id="five-plus" name="five" value="five-plus">
+            <label for="five-plus">absolument</label><br>
+            <input type="radio" id="five-minus" name="five" value="five-minus">
+            <label for="five-minus">c'est une des sources du problème</label><br>
+            <input type="radio" id="five-equal" name="five" value="five-equal">
+            <label for="five-equal">ni l'un ni l'autre</label><br>
+            <br>
+
+            <p>6/10 - Durabilité et capitalisme sont incompatibles :</p>
+            <input type="radio" id="six-minus" name="six" value="six-minus">
+            <label for="six-minus">vrai</label><br>
+            <input type="radio" id="six-plus" name="six" value="six-plus">
+            <label for="six-plus">faux</label><br>
+            <br>
+
+            <p>7/10 - Vaut-il mieux :</p>
+            <input type="radio" id="seven-plus" name="seven" value="seven-plus">
+            <label for="seven-plus">acheter un objet produit d'une façon respectueuse de l'environnement</label><br>
+            <input type="radio" id="seven-minus" name="seven" value="seven-minus">
+            <label for="seven-minus">ne pas l'acheter du tout</label><br>
+            <br>
+
+            <p>8/10 - Pour résoudre le problème du réchauffement climatique, les entreprises doivent :</p>
+            <input type="radio" id="eight-plus" name="eight" value="eight-plus">
+            <label for="eight-plus">s'adapter pour répondre aux enjeux</label><br>
+            <input type="radio" id="eight-minus" name="eight" value="eight-minus">
+            <label for="eight-minus">disparaître</label><br>
+            <br>
+
+            <p>9/10 - Pour être plus durable, la société dans son ensemble doit :</p>
+            <input type="radio" id="nine-minus" name="nine" value="nine-minus">
+            <label for="nine-minus">ralentir</label><br>
+            <input type="radio" id="nine-plus" name="nine" value="nine-plus">
+            <label for="nine-plus">accélérer</label><br>
+            <br>
+
+            <p>10/10 - La compensation carbone est :</p>
+            <input type="radio" id="ten-plus" name="ten" value="ten-plus">
+            <label for="ten-plus">une excellente solution</label><br>
+            <input type="radio" id="ten-minus" name="ten" value="ten-minus">
+            <label for="ten-minus">une arnaque</label><br>
+            <input type="radio" id="ten-equal" name="ten" value="ten-equal">
+            <label for="ten-equal">ni l'un ni l'autre</label><br>
+            <br>
+          </form>
+        <button>Valider mes réponses</button>
+
+        <button>Refaire le test</button>
+
+        <p id='score'></p><br>
+        <p id='conclusion'></p>
+    </body>
+
+    <script>
+        $(function() {
+            $('button').click(function() {
+                var score = 0;
+                const questions = [
+                    'one',
+                    'two',
+                    'three',
+                    'four',
+                    'five',
+                    'six',
+                    'seven',
+                    'eight',
+                    'nine',
+                    'ten'
+                ];
+                for (const el in questions) {
+                    if ($('input[name="' + el + '"]:checked').val() === el + '-plus') {
+                        score++;
+                    } else if ($('input[name="' + el + '"]:checked').val() === el + '-minus') {
+                        score--;
+                    } else { }
+                }
+
+                $('#score').val('Votre score est ' + score.toString());
+                if (score <= -8) {
+                    $('#conclusion').val("T'es un(e) vrai(e) ! Tu as l'air convaincu que le ralentissement et la non-action sont les clefs du 21 ème siècle.");
+                } else if (score <= -4) {
+                    $('#conclusion').val("Pas mal ! Développe encore ta haine des entreprises et de leurs instruments de communication et tu seras complètement immunisé(e) au Greenwashing.");
+                } else if (score <= -1) {
+                    $('#conclusion').val("Ça passe tout juste ! Tes réponses montrent une certaine modération mais tu es encore très naïf/ve sur certains sujets relié à l'écologie.");
+                } else if (score === 0)
+                
+            });
+        });
+    </script>
 </html>
+
