@@ -2,12 +2,26 @@
 <html>
     <head>
       <title>Test Greenwashing</title>
+      <link rel="icon" type="image/jpg" href="favicon.jpg"/>
+      <meta property="og:image" content="https://static.thenounproject.com/png/777783-200.png" />
+      <script src="greenwashing.jpeg"></script>
+      <style>
+          body {
+              background-color: lightgreen;
+              font-family: Arial, Helvetica, sans-serif;
+          }
+
+          h1 {
+              color: green;
+          }
+      </style>
     </head>
     <body>
-        <h1></h1>
-        <form action="/action_page.php">
+        <h1>Test Greenwashing</h1>
+        <h2>Testez en 10 questions si vous êtes matrixé par le Greenwashing</h2>
+        <form>
             <p>1/10 - Pour résoudre le problème du réchauffement climatique, il vaut mieux :</p>
-            <input type="radio" id="one-plus name="one" value="one-plus">
+            <input type="radio" id="one-plus" name="one" value="one-plus">
             <label for="one-plus">des actions</label><br>
             <input type="radio" id="one-minus" name="one" value="one-minus">
             <label for="one-minus">de l'inaction</label><br>
@@ -86,9 +100,9 @@
             <label for="ten-equal">ni l'un ni l'autre</label><br>
             <br>
           </form>
-        <button>Valider mes réponses</button>
 
-        <button>Refaire le test</button>
+        <button id='validate' disabled='disabled'>Valider mes réponses</button>
+        <button id='restart'>Refaire le test</button>
 
         <p id='score'></p><br>
         <p id='conclusion'></p>
@@ -96,9 +110,7 @@
 
     <script>
         $(function() {
-            $('button').click(function() {
-                var score = 0;
-                const questions = [
+            const questions = [
                     'one',
                     'two',
                     'three',
@@ -110,23 +122,52 @@
                     'nine',
                     'ten'
                 ];
-                for (const el in questions) {
-                    if ($('input[name="' + el + '"]:checked').val() === el + '-plus') {
-                        score++;
-                    } else if ($('input[name="' + el + '"]:checked').val() === el + '-minus') {
-                        score--;
+            $("input[type='radio']").change(function() {
+                var allTicked = true;
+                for (var i=0; i<questions.length; i++) {
+                    if (!$('input[name="' + questions[i] + '"]:checked').val()) {
+                        allTicked = false;
+                    }
+                }
+                if (allTicked) {
+                    $('#validate').prop('disabled', false);
+                }
+            });
+
+            $('#validate').click(function() {
+                for (var i=0; i<questions.length; i++) {
+                    $('input[name="' + questions[i] + '"]').prop('disabled', true);
+                }
+                var score = 50;
+                for (var i=0; i<questions.length; i++) {
+                    if ($('input[name="' + questions[i] + '"]:checked').val() === questions[i] + '-plus') {
+                        score += 5;
+                    } else if ($('input[name="' + questions[i] + '"]:checked').val() === questions[i] + '-minus') {
+                        score -= 5;
                     } else { }
                 }
+                $('#score').text('Votre score du test Greenwashing est de ' + score.toString() + ' %');
+                if (score <= 20) {
+                    $('#conclusion').text("T'es un(e) vrai(e) ! Tu as l'air convaincu que le ralentissement et l'inaction sont les clefs du 21 ème siècle.");
+                } else if (score <= 40) {
+                    $('#conclusion').text("Pas mal ! Développe encore ta haine des entreprises et de leurs instruments de communication et tu seras complètement immunisé(e) au Greenwashing.");
+                } else if (score <= 60) {
+                    $('#conclusion').text("Tes réponses montrent une certaine modération mais tu es encore très naïf/ve sur certains sujets relié à l'écologie.");
+                } else if (score <= 80) {
+                    $('#conclusion').text("Le Greenwashing marche plutôt bien sur toi. Lis davantage d'articles scientifiques plus critiques pour sortir du faux.");
+                } else {
+                    $('#conclusion').text("Tu es complètement matrixé par le Greenwashing et tu penses que répéter les erreurs du passé permettront de les corriger. Développe ton esprit critique de toute urgence !");
+                }
+            });
 
-                $('#score').val('Votre score est ' + score.toString());
-                if (score <= -8) {
-                    $('#conclusion').val("T'es un(e) vrai(e) ! Tu as l'air convaincu que le ralentissement et la non-action sont les clefs du 21 ème siècle.");
-                } else if (score <= -4) {
-                    $('#conclusion').val("Pas mal ! Développe encore ta haine des entreprises et de leurs instruments de communication et tu seras complètement immunisé(e) au Greenwashing.");
-                } else if (score <= -1) {
-                    $('#conclusion').val("Ça passe tout juste ! Tes réponses montrent une certaine modération mais tu es encore très naïf/ve sur certains sujets relié à l'écologie.");
-                } else if (score === 0)
-                
+            $('#restart').click(function() {
+                for (var i=0; i<questions.length; i++) {
+                    $('input[name="' + questions[i] + '"]').prop('disabled', false);
+                    $('input[name="' + questions[i] + '"]').prop('checked', false);
+                }
+                $('#validate').prop('disabled', true);
+                $('#score').text('');
+                $('#conclusion').text('');
             });
         });
     </script>
